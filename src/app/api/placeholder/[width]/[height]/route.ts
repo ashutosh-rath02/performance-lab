@@ -1,18 +1,13 @@
-import { NextRequest } from "next/server";
-
-type RouteParams = {
+type Props = {
   params: {
     width: string;
     height: string;
   };
 };
 
-export async function GET(
-  request: NextRequest,
-  context: RouteParams
-): Promise<Response> {
-  const width = parseInt(context.params.width);
-  const height = parseInt(context.params.height);
+export async function GET(_: Request, props: Props): Promise<Response> {
+  const width = parseInt(props.params.width);
+  const height = parseInt(props.params.height);
 
   if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
     return new Response("Invalid dimensions", { status: 400 });
@@ -35,6 +30,7 @@ export async function GET(
     </svg>
   `;
 
+  // Return the SVG with appropriate headers
   return new Response(svg, {
     headers: {
       "Content-Type": "image/svg+xml",
@@ -42,3 +38,7 @@ export async function GET(
     },
   });
 }
+
+// Optionally, you can add config exports
+export const dynamic = "force-dynamic";
+export const runtime = "edge";
