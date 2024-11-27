@@ -1,18 +1,11 @@
 import { NextRequest } from "next/server";
 
-interface RouteContext {
-  params: {
-    width: string;
-    height: string;
-  };
-}
-
 export async function GET(
   request: NextRequest,
-  context: RouteContext
+  { params }: { params: { width: string; height: string } }
 ): Promise<Response> {
-  const width = parseInt(context.params.width);
-  const height = parseInt(context.params.height);
+  const width = parseInt(params.width);
+  const height = parseInt(params.height);
 
   if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
     return new Response("Invalid dimensions", { status: 400 });
