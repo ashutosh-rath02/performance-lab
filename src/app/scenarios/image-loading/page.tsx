@@ -36,10 +36,8 @@ export default function ImageLoadingPage() {
     setMounted(true);
   }, []);
 
-  // Apply network throttling
   useEffect(() => {
     if (networkSpeed.downloadSpeed > 0) {
-      // In a real app, you'd implement actual throttling here
       console.log(
         `Network throttled to ${networkSpeed.downloadSpeed}kbps with ${networkSpeed.latency}ms latency`
       );

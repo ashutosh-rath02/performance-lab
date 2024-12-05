@@ -1,36 +1,157 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frontend Performance Testing Lab
 
-## Getting Started
+A comprehensive toolkit for testing, measuring, and analyzing frontend application performance. Built with Next.js, React, and TypeScript.
 
-First, run the development server:
+## Project Structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+📦src
+ ┣ 📂app                  # Next.js app directory
+ ┃ ┣ 📂benchmark         # Benchmark dashboard
+ ┃ ┣ 📂scenarios         # Test scenarios
+ ┃ ┃ ┣ 📂image-loading   # Image loading tests
+ ┃ ┃ ┣ 📂list-rendering  # List rendering tests
+ ┃ ┃ ┗ 📂data-fetching  # Data fetching tests
+ ┣ 📂components
+ ┃ ┣ 📂layout           # Layout components
+ ┃ ┣ 📂performance      # Performance monitoring components
+ ┃ ┗ 📂ui               # UI components
+ ┗ 📂lib
+   ┣ 📂hooks            # Custom hooks
+   ┣ 📂stores           # State management
+   ┣ 📂types            # TypeScript types
+   ┗ 📂utils            # Utility functions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Core Technologies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js 14**: App Router, Server Components
+- **React 18**: Concurrent Features
+- **TypeScript**: Type Safety
+- **TailwindCSS**: Styling
+- **Recharts**: Data Visualization
+- **Zustand**: State Management
+- **SWR**: Data Fetching
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Key Features Implementation
 
-## Learn More
+### 1. Performance Monitoring System
 
-To learn more about Next.js, take a look at the following resources:
+```typescript
+// lib/utils/performance/monitor.ts
+class PerformanceMonitor {
+  // Tracks Core Web Vitals, custom metrics
+  // Uses Performance API, PerformanceObserver
+}
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+// Usage via hook
+const { metrics } = usePerformanceMonitor();
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2. Benchmark Store
 
-## Deploy on Vercel
+```typescript
+// lib/stores/benchmarkStore.ts
+interface BenchmarkStore {
+  metrics: BenchmarkMetric[];
+  addMetric: (metric: BenchmarkMetric) => void;
+  // Manages test results and analytics
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. Test Scenarios
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Each scenario follows this pattern:
+
+```typescript
+interface TestScenario {
+  setup: () => void;
+  execute: () => Promise<void>;
+  measure: () => BenchmarkMetric;
+  cleanup: () => void;
+}
+```
+
+### 4. Visualization System
+
+Built on Recharts with standard configurations:
+
+```typescript
+// components/performance/MetricsChart.tsx
+interface MetricsChartProps {
+  metrics: PerformanceMetric[];
+  metricName: string;
+}
+```
+
+## Implementation Guidelines
+
+1. **Performance Metrics**
+
+   - Use `performance.now()` for timing
+   - Implement custom metrics via PerformanceObserver
+   - Store metrics with timestamps and categories
+
+2. **Test Scenarios**
+
+   - Isolate tests to prevent interference
+   - Include setup and cleanup phases
+   - Measure multiple iterations for accuracy
+
+3. **State Management**
+
+   - Use Zustand for global state
+   - Implement atomic updates
+   - Handle persistence when needed
+
+4. **Component Design**
+   - Follow atomic design principles
+   - Implement proper error boundaries
+   - Use React.memo() for optimization
+
+## Adding New Features
+
+1. **New Test Scenario**
+
+   ```typescript
+   // 1. Create types
+   interface ScenarioConfig {}
+
+   // 2. Implement test logic
+   class ScenarioTest implements TestScenario {}
+
+   // 3. Create UI components
+   function ScenarioComponent() {}
+   ```
+
+2. **New Metric Type**
+
+   ```typescript
+   // 1. Define metric type
+   interface CustomMetric extends BaseMetric {}
+
+   // 2. Add to monitor
+   class PerformanceMonitor {
+     trackCustomMetric() {}
+   }
+   ```
+
+## Testing Guidelines
+
+1. **Performance Tests**
+
+   - Run in isolated environments
+   - Use consistent test data
+   - Include variance analysis
+
+2. **Component Tests**
+   - Test rendering performance
+   - Verify metric collection
+   - Check error handling
+
+## Code Style
+
+- Use TypeScript strict mode
+- Implement proper error handling
+- Document complex logic
+- Follow React best practices

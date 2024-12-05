@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning>
         <Navigation />
-        <main className="min-h-screen">{children}</main>
+        <main className="min-h-screen max-w-6xl mx-auto">{children}</main>
       </body>
     </html>
   );
