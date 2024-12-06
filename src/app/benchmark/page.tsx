@@ -10,6 +10,7 @@ import { TrendingAnalysis } from "@/components/performance/TrendingAnalysis";
 import { PerformanceComparison } from "@/components/performance/PerformanceComparison";
 import { PerformanceAlerts } from "@/components/performance/PerformanceAlerts";
 import { BenchmarkFilters } from "@/components/performance/BenchmarkFilter";
+import { PerformanceInsights } from "@/components/performance/PerformanceInsights";
 
 const PERFORMANCE_THRESHOLDS = {
   duration: 1000, // 1 second
@@ -78,6 +79,8 @@ export default function BenchmarkDashboard() {
         metrics={metrics}
         thresholds={PERFORMANCE_THRESHOLDS}
       />
+
+      <PerformanceInsights metrics={metrics} />
 
       <BenchmarkFilters
         categories={categoryList}
